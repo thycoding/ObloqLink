@@ -857,7 +857,7 @@ namespace Obloq {
      * The HTTP get request.url(string):URL:time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=79
+    //% weight=53
     //% blockId=Obloq_http_get
     //% block="http(get) | url %url| timeout(ms) %time"
     //% advanced=false
@@ -880,7 +880,7 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=78
+    //% weight=52
     //% blockId=Obloq_http_post
     //% block="http(post) | url %url| content %content| timeout(ms) %time"
     export function Obloq_http_post(url: string, content: string, time: number): string {
@@ -902,7 +902,7 @@ namespace Obloq {
      * url(string): URL; content(string):content; time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=77
+    //% weight=51
     //% blockId=Obloq_http_put
     //% block="http(put) | url %url| content %content| timeout(ms) %time"
     export function Obloq_http_put(url: string, content: string, time: number): string {
