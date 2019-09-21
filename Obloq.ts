@@ -1,5 +1,5 @@
 /**
- *Obloq Message
+ *Obloq Link
  */
 
  
@@ -384,7 +384,7 @@ namespace Obloq {
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_WIFI_setup
-    //% block="Wifi set|Pin set:|receiving data (green wire): %receive|sending data (blue wire): %send|Wi-Fi:|name: %SSID|password: %PASSWORD|start connection"
+    //% block="Wifi Setup|Pin set:|receiving data (green wire): %receive|sending data (blue wire): %send|Wi-Fi:|name: %SSID|password: %PASSWORD|start connection"
     export function WIFI_setup(/*serial*/receive: SerialPin, send: SerialPin,
                                      /*wifi*/SSID: string, PASSWORD: string,
         /*EVENT: string, KEY: string*/):
@@ -405,8 +405,8 @@ namespace Obloq {
     //% weight=99
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
-    //% blockId=IFTTT_MQTT_Weather_http_IFTTT
-    //% block="Webhooks config:|event: %EVENT|key: %KEY|"
+    //% blockId=Obloq_IFTTT_webhooks
+    //% block="IFTTT Webhooks:|event: %EVENT|key: %KEY|"
     export function Obloq_http_IFTTT(EVENT: string, KEY: string): void {
         OBLOQ_WEBHOOKS_EVENT = EVENT
         OBLOQ_WEBHOOKS_KEY = KEY
@@ -429,21 +429,14 @@ namespace Obloq {
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
     //% blockId=Obloq_mqtt_setup
-    //% block="Obloq setup mqtt | Pin set: | receiving data (green wire): %receive| sending data (blue wire): %send | Wi-Fi: | name: %SSID| password: %PASSWORD| IoT service: | broker: %BROKER| port: %BPORT| Iot_id: %IOT_ID| Iot_pwd: %IOT_PWD| (default topic_0) Topic: %IOT_TOPIC | start connection"
-    export function Obloq_mqtt_setup(/*serial*/receive: SerialPin, send: SerialPin,
-                                     /*wifi*/SSID: string, PASSWORD: string,
-							  /*mqtt broker*/ BROKER: string, BPORT: number,
-                                     /*mqtt*/IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
+    //% block="Obloq MQTT Setup | IoT Service: | broker: %BROKER| port: %BPORT| name: %IOT_ID| password: %IOT_PWD| (default topic_0) Topic: %IOT_TOPIC | start connection"
+    export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
         void {
-        OBLOQ_WIFI_SSID = SSID
-        OBLOQ_WIFI_PASSWORD = PASSWORD
 	   OBLOQ_MQTT_SERVER = BROKER
 	   OBLOQ_MQTT_PORT = BPORT
         OBLOQ_MQTT_PWD = IOT_PWD
         OBLOQ_MQTT_ID = IOT_ID
         OBLOQ_MQTT_TOPIC[0][0] = IOT_TOPIC
-        OBLOQ_SERIAL_TX = send
-        OBLOQ_SERIAL_RX = receive
         Obloq_serial_init()
         Obloq_start_connect_mqtt("connect wifi")
     }
