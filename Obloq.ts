@@ -414,15 +414,11 @@ namespace Obloq {
 
     
     /**
-     * @param SSID to SSID ,eg: "yourSSID"
-     * @param PASSWORD to PASSWORD ,eg: "yourPASSWORD"
      * @param BROKER to BROKER ,eg: "iot.dfrobot.com"
      * @param BPORT to BPORT ,eg: 1883		
      * @param IOT_ID to IOT_ID ,eg: "yourIotId"
      * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
      * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
-     * @param receive to receive ,eg: SerialPin.P1
-     * @param send to send ,eg: SerialPin.P2
     */
     //% weight=102
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
@@ -472,7 +468,7 @@ namespace Obloq {
     */
     //% weight=200
     //% blockId=Obloq_mqtt_add_topic
-    //% block="subscribe additional %top |: %IOT_TOPIC"
+    //% block="MQTT subscribe additional %top |: %IOT_TOPIC"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
     //% advanced=true
     export function Obloq_mqtt_add_topic(top: TOPIC, IOT_TOPIC: string): void {
@@ -1006,7 +1002,7 @@ namespace Obloq {
     */
     //% weight=101
     //% blockId=Obloq_mqtt_send_message
-    //% block="pubLish %mess |to topic_0"
+    //% block="MQTT pubLish %mess |to topic_0"
     export function Obloq_mqtt_send_message(mess: string): void {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_MQTT_INIT) {
@@ -1026,7 +1022,7 @@ namespace Obloq {
     */
     //% weight=190
     //% blockId=Obloq_mqtt_send_message_more
-    //% block="pubLish %mess |to %top"
+    //% block="MQTT pubLish %mess |to %top"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
     //% advanced=true
     export function Obloq_mqtt_send_message_more(mess: string, top: TOPIC): void {
@@ -1081,7 +1077,7 @@ namespace Obloq {
     */
     //% weight=100
     //% blockGap=50
-    //% blockId=obloq_mqtt_callback_user block="on topic_0 received"
+    //% blockId=obloq_mqtt_callback_user block="MQTT on topic_0 received"
     //% useLoc="Obloq.Obloq_mqtt_callback_user"
     export function Obloq_mqtt_callback_user(cb: (message: string) => void): void {
         Obloq_mqtt_callback(() => {
@@ -1098,7 +1094,7 @@ namespace Obloq {
     */
     //% weight=180
     //% blockGap=60
-    //% blockId=obloq_mqtt_callback_user_more block="on %top |received"
+    //% blockId=obloq_mqtt_callback_user_more block="MQTT on %top |received"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
     //% useLoc="Obloq.Obloq_mqtt_callback_user_more"
     //% advanced=true
