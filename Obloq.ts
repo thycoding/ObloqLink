@@ -455,11 +455,13 @@ namespace Obloq {
             Obloq_serial_init()
         }
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
+	   let reply="|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r"
         let ret = Obloq_http_wait_request(time)
         if (ret == "Congratulations! You've fired the testObloq event") {
             ret = "OK"
         }
-        return ret
+        //return ret
+	   return reply
     }    
     
     
