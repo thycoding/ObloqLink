@@ -854,14 +854,14 @@ namespace Obloq {
 
     
     /**
-     * The HTTP get request.url(string):URL:time(ms): private long maxWait
+     * The HTTP request.url(string):URL:time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
     //% weight=79
-    //% blockId=Obloq_http_get
-    //% block="http(get) | url %url| timeout(ms) %time"
+    //% blockId=Obloq_http_request
+    //% block="HTTP Request | url %url| timeout(ms) %time"
     //% advanced=false
-    export function Obloq_http_get(url: string, time: number): string {
+    export function Obloq_http_request(url: string, time: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -871,50 +871,6 @@ namespace Obloq {
         }
         //obloqWriteString("|3|1|http://" + OBLOQ_HTTP_IP + ":" + OBLOQ_HTTP_PORT + "/" + url + "|\r")
         obloqWriteString("|3|1|http://" + url + "|\r")
-        return Obloq_http_wait_request(time)
-    }
-
-    
-    /**
-     * The HTTP post request.url(string): URL; content(string):content
-     * time(ms): private long maxWait
-     * @param time set timeout, eg: 10000
-    */
-    //% weight=78
-    //% blockId=Obloq_http_post
-    //% block="http(post) | url %url| content %content| timeout(ms) %time"
-    export function Obloq_http_post(url: string, content: string, time: number): string {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        if (!OBLOQ_HTTP_INIT)
-            return OBLOQ_STR_TYPE_IS_NONE
-
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-        obloqWriteString("|3|2|http://" + OBLOQ_HTTP_IP + ":" + OBLOQ_HTTP_PORT + "/" + url + "," + content + "|\r")
-
-        return Obloq_http_wait_request(time)
-    }
-
-
-    /**
-     * The HTTP put request,Obloq.put() can only be used for http protocol!
-     * url(string): URL; content(string):content; time(ms): private long maxWait
-     * @param time set timeout, eg: 10000
-    */
-    //% weight=77
-    //% blockId=Obloq_http_put
-    //% block="http(put) | url %url| content %content| timeout(ms) %time"
-    export function Obloq_http_put(url: string, content: string, time: number): string {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        if (!OBLOQ_HTTP_INIT)
-            return OBLOQ_STR_TYPE_IS_NONE
-
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-        obloqWriteString("|3|3|http://" + OBLOQ_HTTP_IP + ":" + OBLOQ_HTTP_PORT + "/" + url + "," + content + "|\r")
-
         return Obloq_http_wait_request(time)
     }
 
