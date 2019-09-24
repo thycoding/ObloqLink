@@ -475,7 +475,7 @@ namespace Obloq {
     //% weight=95
     //% blockId=Obloq_ThingSpeak_post
     //% expandableArgumentMode"toggle" inlineInputMode=inline
-    //% block="ThingSpeak (post) | write key: %myKey|  timeout(ms) %time| field1: %field1| field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    //% block="ThingSpeak (post) | write key: %myKey| timeout(ms) %time field1: %field1|| field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
     export function Obloq_ThingSpeak_post(myKey: string, time: number, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
