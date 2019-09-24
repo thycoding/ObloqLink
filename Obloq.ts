@@ -462,8 +462,6 @@ namespace Obloq {
         return ret
     }    
 
-
-    
     
     /**
      * Disconnect the serial port.
@@ -876,9 +874,7 @@ namespace Obloq {
         return Obloq_http_wait_request(time)
     }
 
-   
     
-
     function Obloq_connect_mqtt(): void {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
