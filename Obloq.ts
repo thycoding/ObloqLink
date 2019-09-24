@@ -468,7 +468,7 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=92 group="03_ThingSpeak"
+    //% weight=92
     //% blockId=saveToThingSpeak
     //% expandableArgumentMode"toggle" inlineInputMode=inline
     //% block="send data to ThingSpeak :| write key: %myKey timeout(ms): %time  field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
