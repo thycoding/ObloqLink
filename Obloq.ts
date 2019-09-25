@@ -858,10 +858,9 @@ namespace Obloq {
     */
     //% weight=100
     //% blockId=saveToThingSpeak
-    //% expandableArgumentMode"toggle" inlineInputMode=inline 
     //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3" group="04_ThingSpeak"
     //% advanced=true
-    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number): string {
+    export function saveToThingSpeak(myKey: string, field1:number, field2:number, field3:number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
