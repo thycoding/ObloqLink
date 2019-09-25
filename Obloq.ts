@@ -860,9 +860,9 @@ namespace Obloq {
     */
     //% weight=100
     //% blockId=Obloq_ThingSpeak_post
-    //% block="ThingSpeak(post) | field1 %field1| field2 %field2| field3 %field3| timeout(ms) %time" group="04_ThingSpeak"
+    //% block="ThingSpeak(post) | write key: %myKey field1 %field1| field2 %field2| field3 %field3| timeout(ms) %time" group="04_ThingSpeak"
     //% advanced=true        
-    export function Obloq_ThingSpeak_post(field1: string, field2: string, field3: string, time: number): string {
+    export function Obloq_ThingSpeak_post(myKey: string, field1: string, field2: string, field3: string, time: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -870,10 +870,10 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
-        obloqWriteString("|3|2|http://api.thingspeak.com/update?api_key=" + "PQ76C27NIAZQKOBL" + "&field1="+field1+"&field2="+field2+"&field3="+field3 + "|\r")
+        obloqWriteString("|3|2|http://api.thingspeak.com/update?api_key=" + myKey + "&field1="+field1+"&field2="+field2+"&field3="+field3 + "|\r")
         let ret = Obloq_http_wait_request(time)
         return ret
-    }     
+    }    
     
     
     /**
@@ -882,7 +882,7 @@ namespace Obloq {
     */
     //% weight=99
     //% blockId=Obloq_http_request
-    //% block="HTTP Request | url %url| timeout(ms) %time"
+    //% block="HTTP Request | url %url| timeout(ms) %time" group="05_HTTP"
     //% advanced=true
     export function Obloq_http_request(url: string, time: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
