@@ -381,7 +381,7 @@ namespace Obloq {
      * @param receive to receive ,eg: SerialPin.P1
      * @param send to send ,eg: SerialPin.P2
     */
-    //% weight=200
+    //% weight=200 group="01_System"    
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_WIFI_setup
@@ -403,7 +403,7 @@ namespace Obloq {
         * @param EVENT to EVENT ,eg: "yourEvent"
         * @param KEY to KEY ,eg: "yourKey"
        */
-    //% weight=99
+    //% weight=99 group="03_IFTTT"        
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_IFTTT_webhooks
