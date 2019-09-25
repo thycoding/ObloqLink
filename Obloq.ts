@@ -37,7 +37,6 @@ enum TOPIC {
  *Obloq implementation method.
  */
 //% weight=10 color=#019b9b icon="\uf121" block="Obloq Link"
-/* //% groups=["04_ThingSpeak", "03_IFTTT", "02_MQTT", "01_System"]  */
 namespace Obloq {
 
     //serial
@@ -469,9 +468,9 @@ namespace Obloq {
     */
     //% weight=200
     //% blockId=Obloq_mqtt_add_topic
-    //% block="MQTT subscribe additional %top |: %IOT_TOPIC"
+    //% block="MQTT subscribe additional %top |: %IOT_TOPIC" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
-    //% advanced=true
+    //% advanced=false
     export function Obloq_mqtt_add_topic(top: TOPIC, IOT_TOPIC: string): void {
         OBLOQ_MQTT_TOPIC[top][0] = IOT_TOPIC
         if (!OBLOQ_MQTT_INIT || OBLOQ_WORKING_MODE_IS_STOP) return
@@ -858,7 +857,7 @@ namespace Obloq {
      * The HTTP request.url(string):URL:time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=79
+    //% weight=99
     //% blockId=Obloq_http_request
     //% block="HTTP Request | url %url| timeout(ms) %time"
     //% advanced=true
@@ -979,9 +978,9 @@ namespace Obloq {
     */
     //% weight=190
     //% blockId=Obloq_mqtt_send_message_more
-    //% block="MQTT pubLish %mess |to %top"
+    //% block="MQTT pubLish %mess |to %top" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
-    //% advanced=true
+    //% advanced=false
     export function Obloq_mqtt_send_message_more(mess: string, top: TOPIC): void {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_MQTT_INIT) {
@@ -1051,10 +1050,10 @@ namespace Obloq {
     */
     //% weight=180
     //% blockGap=60
-    //% blockId=obloq_mqtt_callback_user_more block="MQTT on %top |received"
+    //% blockId=obloq_mqtt_callback_user_more block="MQTT on %top |received" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
     //% useLoc="Obloq.Obloq_mqtt_callback_user_more"
-    //% advanced=true
+    //% advanced=false
     export function Obloq_mqtt_callback_user_more(top: TOPIC, cb: (message: string) => void) {
         Obloq_mqtt_callback_more(top, () => {
             const packet = new PacketaMqtt()
