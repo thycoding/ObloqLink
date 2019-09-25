@@ -857,8 +857,8 @@ namespace Obloq {
      * Connect to https://thingspeak.com/ to store the data from micro:bit
     */
     //% weight=100
-    //% blockId=saveToThingSpeak blockGap=5
- /*   //% expandableArgumentMode"toggle" inlineInputMode=inline */
+    //% blockId=saveToThingSpeak
+    //% expandableArgumentMode"toggle" inlineInputMode=inline 
     //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3" group="04_ThingSpeak"
     //% advanced=true
     export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number): string {
