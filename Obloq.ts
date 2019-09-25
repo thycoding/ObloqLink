@@ -37,7 +37,7 @@ enum TOPIC {
  *Obloq implementation method.
  */
 //% weight=10 color=#019b9b icon="\uf121" block="Obloq Link"
-//% groups=["04_ThingSpeak", "03_IFTTT", "02_MQTT", "01_System"] 
+/* //% groups=["04_ThingSpeak", "03_IFTTT", "02_MQTT", "01_System"]  */
 namespace Obloq {
 
     //serial
@@ -381,11 +381,11 @@ namespace Obloq {
      * @param receive to receive ,eg: SerialPin.P1
      * @param send to send ,eg: SerialPin.P2
     */
-    //% weight=200 group="01_System"    
+    //% weight=200   
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_WIFI_setup
-    //% block="Wifi Setup|Pin set:|receiving data (green wire): %receive|sending data (blue wire): %send|Wi-Fi:|name: %SSID|password: %PASSWORD|start connection"
+    //% block="Wifi Setup|Pin set:|receiving data (green wire): %receive|sending data (blue wire): %send|Wi-Fi:|name: %SSID|password: %PASSWORD|start connection" group="01_System" 
     export function WIFI_setup(/*serial*/receive: SerialPin, send: SerialPin,
                                      /*wifi*/SSID: string, PASSWORD: string,
         /*EVENT: string, KEY: string*/):
@@ -403,11 +403,11 @@ namespace Obloq {
         * @param EVENT to EVENT ,eg: "yourEvent"
         * @param KEY to KEY ,eg: "yourKey"
        */
-    //% weight=99 group="03_IFTTT"        
+    //% weight=99      
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_IFTTT_webhooks
-    //% block="IFTTT Webhooks:|event: %EVENT|key: %KEY|"
+    //% block="IFTTT Webhooks:|event: %EVENT|key: %KEY|" group="03_IFTTT" 
     export function Obloq_http_IFTTT(EVENT: string, KEY: string): void {
         OBLOQ_WEBHOOKS_EVENT = EVENT
         OBLOQ_WEBHOOKS_KEY = KEY
@@ -421,12 +421,12 @@ namespace Obloq {
      * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
      * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
     */
-    //% weight=102 group="02_MQTT"
+    //% weight=102
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
     //% blockId=Obloq_mqtt_setup
-    //% block="MQTT Setup|IoT Service:|broker: %BROKER|port: %BPORT|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
+    //% block="MQTT Setup|IoT Service:|broker: %BROKER|port: %BPORT|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection" group="02_MQTT"
     export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
         void {
 	   OBLOQ_MQTT_SERVER = BROKER
@@ -444,9 +444,9 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=99 group="03_IFTTT"
+    //% weight=99
     //% blockId=Obloq_IFTTT_post
-    //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
+    //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time" group="03_IFTTT"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
@@ -957,9 +957,9 @@ namespace Obloq {
      * @param top set top, eg: top
      * @param mess set mess, eg: mess
     */
-    //% weight=101 group="02_MQTT"
+    //% weight=101
     //% blockId=Obloq_mqtt_send_message
-    //% block="MQTT pubLish %mess |to topic_0"
+    //% block="MQTT pubLish %mess |to topic_0" group="02_MQTT"
     export function Obloq_mqtt_send_message(mess: string): void {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_MQTT_INIT) {
@@ -1032,9 +1032,9 @@ namespace Obloq {
      * This is an MQTT listener callback function, which is very important.
      * The specific use method can refer to "example/ObloqMqtt.ts"
     */
-    //% weight=100 group="02_MQTT"
+    //% weight=100
     //% blockGap=50
-    //% blockId=obloq_mqtt_callback_user block="MQTT on topic_0 received"
+    //% blockId=obloq_mqtt_callback_user block="MQTT on topic_0 received" group="02_MQTT"
     //% useLoc="Obloq.Obloq_mqtt_callback_user"
     export function Obloq_mqtt_callback_user(cb: (message: string) => void): void {
         Obloq_mqtt_callback(() => {
@@ -1067,10 +1067,10 @@ namespace Obloq {
     /**
      * Connect to https://thingspeak.com/ to store the data from micro:bit
     */
-    //% weight=92 group="04_ThingSpeak"   
+    //% weight=92
     //% blockId=saveToThingSpeak
     //% expandableArgumentMode"toggle" inlineInputMode=inline
-    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8" group="04_ThingSpeak"   
     export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
