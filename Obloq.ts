@@ -858,7 +858,7 @@ namespace Obloq {
     */
     //% weight=100
     //% blockId=saveToThingSpeak blockGap=5
-    //% expandableArgumentMode"toggle" inlineInputMode=inline
+ /*   //% expandableArgumentMode"toggle" inlineInputMode=inline */
     //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8" group="04_ThingSpeak"
     //% advanced=true
     export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
