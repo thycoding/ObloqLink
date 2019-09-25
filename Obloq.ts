@@ -853,24 +853,32 @@ namespace Obloq {
     }
 
     
-    /**
+        /**
      * Connect to https://thingspeak.com/ to store the data from micro:bit
     */
-    //% weight=100
+    //% weight=100 group="04_ThingSpeak"
     //% blockId=saveToThingSpeak
-    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3" group="04_ThingSpeak"
-    //% expandableArgumentMode"toggle"
-    //% advanced=true
-    export function saveToThingSpeak(myKey: string, field1:number, field2:number, field3:number): string {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        if (!OBLOQ_HTTP_INIT)
-            return OBLOQ_STR_TYPE_IS_NONE
-
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-	   let returnCode=""
-        let myArr:number[]=[field1,field2,field3]
+    //% expandableArgumentMode"toggle" inlineInputMode=inline
+    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
+        Obloq_serial_init()
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)
+        let returnCode=""
+        let myArr:number[]=[field1,field2,field3,field4,field5,field6,field7,field8]
         let myUrl = "http://api.thingspeak.com/update?api_key=" + myKey
         for(let i=0;i<myArr.length;i++)
         {
@@ -879,9 +887,9 @@ namespace Obloq {
             else
                 break
         }
-        obloqWriteString("|3|1|" + myUrl + "|\r")	   
+        obloqWriteString("|3|1|" + myUrl + "|\r")
 	   return Obloq_http_wait_request(10000)
-    }      
+    }
     
     
     /**
