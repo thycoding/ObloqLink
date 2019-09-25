@@ -420,7 +420,7 @@ namespace Obloq {
      * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
      * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
     */
-    //% weight=102
+    //% weight=180
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
@@ -466,7 +466,7 @@ namespace Obloq {
     /**
      * Disconnect the serial port.
     */
-    //% weight=200
+    //% weight=170
     //% blockId=Obloq_mqtt_add_topic
     //% block="MQTT subscribe additional %top |: %IOT_TOPIC" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
@@ -956,7 +956,7 @@ namespace Obloq {
      * @param top set top, eg: top
      * @param mess set mess, eg: mess
     */
-    //% weight=101
+    //% weight=179
     //% blockId=Obloq_mqtt_send_message
     //% block="MQTT pubLish %mess |to topic_0" group="02_MQTT"
     export function Obloq_mqtt_send_message(mess: string): void {
@@ -976,7 +976,7 @@ namespace Obloq {
      * @param top set top, eg: top
      * @param mess set mess, eg: mess
     */
-    //% weight=190
+    //% weight=171
     //% blockId=Obloq_mqtt_send_message_more
     //% block="MQTT pubLish %mess |to %top" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
@@ -1003,8 +1003,8 @@ namespace Obloq {
      * @param top set top, eg: top
     */
     //% weight=67
-    //% blockId=Obloq_subTopic
-    //% advanced=true
+    //% blockId=Obloq_subTopic group="02_MQTT"
+    //% advanced=false
     function Obloq_subTopic(topic: string): void {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
@@ -1031,7 +1031,7 @@ namespace Obloq {
      * This is an MQTT listener callback function, which is very important.
      * The specific use method can refer to "example/ObloqMqtt.ts"
     */
-    //% weight=100
+    //% weight=178
     //% blockGap=50
     //% blockId=obloq_mqtt_callback_user block="MQTT on topic_0 received" group="02_MQTT"
     //% useLoc="Obloq.Obloq_mqtt_callback_user"
@@ -1048,7 +1048,7 @@ namespace Obloq {
      * This is an MQTT listener callback function, which is very important.
      * The specific use method can refer to "example/ObloqMqtt.ts"
     */
-    //% weight=180
+    //% weight=172
     //% blockGap=60
     //% blockId=obloq_mqtt_callback_user_more block="MQTT on %top |received" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
