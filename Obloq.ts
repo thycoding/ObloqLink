@@ -853,44 +853,27 @@ namespace Obloq {
     }
 
     
-        /**
-     * Connect to https://thingspeak.com/ to store the data from micro:bit
+    /**
+     * The ThingSpeak Post
+     * time(ms): private long maxWait
+     * @param time set timeout, eg: 10000
     */
-    //% weight=100 group="04_ThingSpeak"
-    //% blockId=saveToThingSpeak
-    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
-    //% expandableArgumentMode"toggle" inlineInputMode=inline    
-    //% advanced=true    
-    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
-        Obloq_serial_init()
-	   basic.showLeds(`
-        . . . . .
-        . . . . .
-        . # # # .
-        . . . . .
-        . . . . .
-        `)
-	  basic.pause(500)
-	  basic.showLeds(`
-        . . . . .
-        . . # . .
-        # # # # #
-        . . # . .
-        . . . . .
-        `)
-        let returnCode=""
-        let myArr:number[]=[field1,field2,field3,field4,field5,field6,field7,field8]
-        let myUrl = "http://api.thingspeak.com/update?api_key=" + myKey
-        for(let i=0;i<myArr.length;i++)
-        {
-            if (myArr[i]!=null)
-                myUrl+="&field"+(i+1)+"="+myArr[i]
-            else
-                break
+    //% weight=100
+    //% blockId=Obloq_ThingSpeak_post
+    //% block="ThingSpeak(post) | field1 %field1| field2 %field2| field3 %field3| timeout(ms) %time" group="04_ThingSpeak"
+    //% advanced=true        
+    export function Obloq_ThingSpeak_post(field1: string, field2: string, field3: string, time: number): string {
+        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
+        if (!OBLOQ_HTTP_INIT)
+            return OBLOQ_STR_TYPE_IS_NONE
+
+        if (!OBLOQ_SERIAL_INIT) {
+            Obloq_serial_init()
         }
-        obloqWriteString("|3|1|" + myUrl + "|\r")
-	   return Obloq_http_wait_request(10000)
-    }
+        obloqWriteString("|3|2|http://api.thingspeak.com/update?api_key=" + "PQ76C27NIAZQKOBL" + "&field1="+field1+"&field2="+field2+"&field3="+field3 + "|\r")
+        let ret = Obloq_http_wait_request(time)
+        return ret
+    }     
     
     
     /**
