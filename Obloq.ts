@@ -466,7 +466,7 @@ namespace Obloq {
     /**
      * Disconnect the serial port.
     */
-    //% weight=170
+    //% weight=172
     //% blockId=Obloq_mqtt_add_topic
     //% block="MQTT subscribe additional %top |: %IOT_TOPIC" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
@@ -1048,7 +1048,7 @@ namespace Obloq {
      * This is an MQTT listener callback function, which is very important.
      * The specific use method can refer to "example/ObloqMqtt.ts"
     */
-    //% weight=172
+    //% weight=170
     //% blockGap=60
     //% blockId=obloq_mqtt_callback_user_more block="MQTT on %top |received" group="02_MQTT"
     //% top.fieldEditor="gridpicker" top.fieldOptions.columns=2
