@@ -421,7 +421,7 @@ namespace Obloq {
      * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
      * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
     */
-    //% weight=102
+    //% weight=102 group="02_MQTT"
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
@@ -444,7 +444,7 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=99
+    //% weight=99 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
     //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): string {
@@ -861,7 +861,7 @@ namespace Obloq {
     //% weight=79
     //% blockId=Obloq_http_request
     //% block="HTTP Request | url %url| timeout(ms) %time"
-    //% advanced=false
+    //% advanced=true
     export function Obloq_http_request(url: string, time: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
@@ -957,7 +957,7 @@ namespace Obloq {
      * @param top set top, eg: top
      * @param mess set mess, eg: mess
     */
-    //% weight=101
+    //% weight=101 group="02_MQTT"
     //% blockId=Obloq_mqtt_send_message
     //% block="MQTT pubLish %mess |to topic_0"
     export function Obloq_mqtt_send_message(mess: string): void {
@@ -1032,7 +1032,7 @@ namespace Obloq {
      * This is an MQTT listener callback function, which is very important.
      * The specific use method can refer to "example/ObloqMqtt.ts"
     */
-    //% weight=100
+    //% weight=100 group="02_MQTT"
     //% blockGap=50
     //% blockId=obloq_mqtt_callback_user block="MQTT on topic_0 received"
     //% useLoc="Obloq.Obloq_mqtt_callback_user"
@@ -1067,7 +1067,7 @@ namespace Obloq {
     /**
      * Connect to https://thingspeak.com/ to store the data from micro:bit
     */
-    //% weight=92 group="04_ThingSpeak"    
+    //% weight=92 group="04_ThingSpeak"   
     //% blockId=saveToThingSpeak
     //% expandableArgumentMode"toggle" inlineInputMode=inline
     //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
@@ -1215,4 +1215,4 @@ namespace Obloq {
         obloqEventOn()
         control.onEvent(<number>32, <number>1, Obloq_serial_recevice); // register handler
     }
-} 
+}
