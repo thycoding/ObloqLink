@@ -859,9 +859,9 @@ namespace Obloq {
     //% weight=100
     //% blockId=saveToThingSpeak blockGap=5
  /*   //% expandableArgumentMode"toggle" inlineInputMode=inline */
-    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8" group="04_ThingSpeak"
+    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3" group="04_ThingSpeak"
     //% advanced=true
-    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
+    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -870,7 +870,7 @@ namespace Obloq {
             Obloq_serial_init()
         }
 	   let returnCode=""
-        let myArr:number[]=[field1,field2,field3,field4,field5,field6,field7,field8]
+        let myArr:number[]=[field1,field2,field3]
         let myUrl = "http://api.thingspeak.com/update?api_key=" + myKey
         for(let i=0;i<myArr.length;i++)
         {
