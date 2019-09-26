@@ -853,13 +853,14 @@ namespace Obloq {
     }
 
     
- /**
-     * Connect to https://thingspeak.com/ to store the data from micro:bit
+    /**
+     * Connect to ThingSpeak and update data from micro:bit
     */
-    //% weight=92 group="04_ThingSpeak"
-    //% blockId=saveToThingSpeak
+    //% weight=100 group="04_ThingSpeak"
+    //% blockId=Obloq_ThingSpeak_post
     //% expandableArgumentMode"toggle" inlineInputMode=inline
-    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    //% block="ThingSpeak(post)| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    //% advanced=true    
     export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): void {
         Obloq_serial_init()
 	   basic.showLeds(`
@@ -888,6 +889,11 @@ namespace Obloq {
                 break
         }
         obloqWriteString("|3|1|" + myUrl + "|\r")
+        let ret = Obloq_http_wait_request(15000)
+        if (ret == "")
+            basic.showIcon(IconNames.No)
+        else
+            basic.showIcon(IconNames.Yes)   
     } 
 
     
