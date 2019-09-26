@@ -919,7 +919,12 @@ namespace Obloq {
             Obloq_serial_init()
         }
         obloqWriteString("|3|1|http://" + url + "|\r")
-        return Obloq_http_wait_request(time)
+        let ret = Obloq_http_wait_request(time)
+        if (ret == "")
+            basic.showIcon(IconNames.No)
+        else
+            basic.showIcon(IconNames.Yes)   	   
+        return ret
     }
 
     
