@@ -856,7 +856,7 @@ namespace Obloq {
     /**
      * The ThingSpeak Post
      * time(ms): private long maxWait
-     * @param time set timeout, eg: 10000
+     * a@param time set timeout, eg: 10000
     */
     //% weight=100 group="04_ThingSpeak"
     //% blockId=Obloq_ThingSpeak_post
