@@ -853,24 +853,31 @@ namespace Obloq {
     }
 
     
-    /**
-     * The ThingSpeak Post
-     * time(ms): private long maxWait
-     * a@param time set timeout, eg: 10000
+ /**
+     * Connect to https://thingspeak.com/ to store the data from micro:bit
     */
-    //% weight=100 group="04_ThingSpeak"
-    //% blockId=Obloq_ThingSpeak_post
-    //% expandableArgumentMode"toggle"
-    //% block="ThingSpeak(post) :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"    
-    //% advanced=true        
-    export function Obloq_ThingSpeak_post(myKey:string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        if (!OBLOQ_HTTP_INIT)
-            return OBLOQ_STR_TYPE_IS_NONE
-
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
+    //% weight=92 group="04_ThingSpeak"
+    //% blockId=saveToThingSpeak
+    //% expandableArgumentMode"toggle" inlineInputMode=inline
+    //% block="send data to ThingSpeak :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
+    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): void {
+        Obloq_serial_init()
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)
+        let returnCode=""
         let myArr:number[]=[field1,field2,field3,field4,field5,field6,field7,field8]
         let myUrl = "http://api.thingspeak.com/update?api_key=" + myKey
         for(let i=0;i<myArr.length;i++)
@@ -879,11 +886,9 @@ namespace Obloq {
                 myUrl+="&field"+(i+1)+"="+myArr[i]
             else
                 break
-        }	   
-        obloqWriteString("|3|1|" + myUrl + "|\r")	   
-        let ret = Obloq_http_wait_request(10000)
-        return ret
-    }    
+        }
+        obloqWriteString("|3|1|" + myUrl + "|\r")
+    } 
 
     
     /**
