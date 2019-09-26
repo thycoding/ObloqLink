@@ -860,7 +860,7 @@ namespace Obloq {
     */
     //% weight=100 group="04_ThingSpeak"
     //% blockId=Obloq_ThingSpeak_post
-    //% expandableArgumentMode"toggle" inlineInputMode=inline
+    //% expandableArgumentMode"toggle"
     //% block="ThingSpeak(post) :| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"    
     //% advanced=true        
     export function Obloq_ThingSpeak_post(myKey:string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): string {
