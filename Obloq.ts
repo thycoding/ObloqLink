@@ -510,7 +510,7 @@ namespace Obloq {
     */
     //% weight=49
     //% blockId=Obloq_send_ping
-    //% block="sendPing"
+    //% block="sendPing" group="06_Other"
     //% advanced=true
     export function Obloq_send_ping(): boolean {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
@@ -555,7 +555,7 @@ namespace Obloq {
     */
     //% weight=50
     //% blockId=Obloq_get_version
-    //% block="get version"
+    //% block="get version" group="06_Other"
     //% advanced=true
     export function Obloq_get_version(): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
@@ -600,7 +600,7 @@ namespace Obloq {
     */
     //% weight=48
     //% blockId=Obloq_get_heartbeat
-    //% block="get heartbeat"
+    //% block="get heartbeat" group="06_Other"
     //% advanced=true
     export function Obloq_get_heartbeat(): boolean {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
@@ -644,7 +644,7 @@ namespace Obloq {
     */
     //% weight=47
     //% blockId=Obloq_stop_heartbeat
-    //% block="stop heartbeat"
+    //% block="stop heartbeat" group="06_Other"
     //% advanced=true
     export function Obloq_stop_heartbeat(): boolean {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
@@ -775,7 +775,7 @@ namespace Obloq {
     */
     //% weight=98
     //% blockId=Obloq_Obloq_ifconfig
-    //% block="ipconfig"
+    //% block="ipconfig" group="06_Other"
     //% advanced=true
     export function Obloq_wifi_ipconfig(): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
@@ -861,9 +861,9 @@ namespace Obloq {
     //% weight=100
     //% blockId=Obloq_ThingSpeak_post blockGap=5
     //% expandableArgumentMode"toggle" inlineInputMode=inline    
-    //% block="ThingSpeak(post) | write key: %myKey field1 %field1| field2 %field2| field3 %field3| timeout(ms) %time" group="04_ThingSpeak"
+    //% block="ThingSpeak(post) | write key: %myKey field1 %field1| field2 %field2| field3 %field3| field4 %field4| field5 %field5| field6 %field6| timeout(ms) %time" group="04_ThingSpeak"
     //% advanced=true        
-    export function Obloq_ThingSpeak_post(myKey: string, field1?: string, field2?: string, field3?: string, time?: number): string {
+    export function Obloq_ThingSpeak_post(myKey: string, field1?: string, field2?: string, field3?: string, field4?: string, field5?: string, field6?: string, time?: number): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -871,7 +871,7 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
-        obloqWriteString("|3|2|http://api.thingspeak.com/update?api_key=" + myKey + "&field1="+field1+"&field2="+field2+"&field3="+field3 + "|\r")
+        obloqWriteString("|3|2|http://api.thingspeak.com/update?api_key=" + myKey + "&field1="+field1+"&field2="+field2+"&field3="+field3+"&field4="+field4+"&field5="+field5+"&field6="+field6 + "|\r")
         let ret = Obloq_http_wait_request(time)
         return ret
     }    
