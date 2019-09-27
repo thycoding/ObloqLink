@@ -584,8 +584,7 @@ namespace Obloq {
         # # # # #
         . . # . .
         . . . . .
-        `)
-	   let returnCode=""
+        `)	        
 	   while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -594,21 +593,64 @@ namespace Obloq {
             Obloq_serial_init()
         }
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
-        let ret = time
+        let ret = Obloq_http_wait_request(time)
+	   if (ret.substr(0, "Congratulations".length) == "Congratulations") {
+		  ret = "OK"
+		  basic.showIcon(IconNames.Yes) 
+	   }
+	   else {
+		   ret = "KO"
+		   basic.showIcon(IconNames.No)
+	   }
+        return ret
+    } 
+
+    
+    /**
+     * Connect to IFTTT to trig event
+    */
+    //% weight=98 group="03_IFTTT"
+    //% blockId=sendTextToIFTTT blockGap=5
+    //% expandableArgumentMode"toggle" inlineInputMode=inline
+    //% block="send no space text data to IFTTT to trig Event:| event name: %eventName| your key: %myKey || value1: %value1 value2: %value2 value3: %value3"
+    export function sendTextToIFTTT(eventName:string, myKey: string, value1?:string, value2?:string, value3?:string): void {
+        Obloq_serial_init()
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)
+        let returnCode=""
+        let myArr:string[]=[value1,value2,value3]
+        let myUrl = "http://maker.ifttt.com/trigger/"+eventName+"/with/key/" + myKey+"?"
+        for(let i=0;i<myArr.length;i++)
+        {
+            if (myArr[i]!=null)
+                myUrl+="&value"+(i+1)+"="+myArr[i]
+            else
+                break
+        }
+        serial.readString()
+        obloqWriteString("|3|1|" + myUrl + "|\r")
         for (let i = 0; i < 3; i++) {
             returnCode = serial.readUntil("|")
         }
-        if (returnCode == "200") {
+        if (returnCode == "200")
             basic.showIcon(IconNames.Yes)
-		  returnCode = "OK"
-	   }
-        else {
+        else
             basic.showIcon(IconNames.No)
-		  returnCode = "KO"
-	   }
-	   return returnCode
-    } 
-
+    }    
+    
     
     /**
      * Disconnect the serial port.
