@@ -584,7 +584,8 @@ namespace Obloq {
         # # # # #
         . . # . .
         . . . . .
-        `)	        
+        `)
+	   let returnCode=""
 	   while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -593,14 +594,19 @@ namespace Obloq {
             Obloq_serial_init()
         }
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
-        let ret = Obloq_http_wait_request(time)
+        let ret = time
         for (let i = 0; i < 3; i++) {
             returnCode = serial.readUntil("|")
         }
-        if (returnCode == "200")
+        if (returnCode == "200") {
             basic.showIcon(IconNames.Yes)
-        else
+		  returnCode = "OK"
+	   }
+        else {
             basic.showIcon(IconNames.No)
+		  returnCode = "KO"
+	   }
+	   return returnCode
     } 
 
     
