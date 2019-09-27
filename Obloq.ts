@@ -594,14 +594,13 @@ namespace Obloq {
         }
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
         let ret = Obloq_http_wait_request(time)
-	   if (ret.substr(0, "Congratulations".length) == "Congratulations") {
-		  ret = "OK"
-		  basic.showIcon(IconNames.Yes) 
-	   }
-	   else {
-		   basic.showIcon(IconNames.No)
-	   }
-        return ret
+        for (let i = 0; i < 3; i++) {
+            returnCode = serial.readUntil("|")
+        }
+        if (returnCode == "200")
+            basic.showIcon(IconNames.Yes)
+        else
+            basic.showIcon(IconNames.No)
     } 
 
     
