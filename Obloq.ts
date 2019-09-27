@@ -566,7 +566,7 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=99 group="03_IFTTT"
+    //% weight=98 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
     //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): string {
@@ -609,10 +609,10 @@ namespace Obloq {
     /**
      * Connect to IFTTT to trig event
     */
-    //% weight=98 group="03_IFTTT"
+    //% weight=99 group="03_IFTTT"
     //% blockId=sendTextToIFTTT blockGap=5
     //% expandableArgumentMode"toggle" inlineInputMode=inline
-    //% block="send no space text data to IFTTT to trig Event:| event name: %eventName| your key: %myKey || value1: %value1 value2: %value2 value3: %value3"
+    //% block="IFTTT post (no space text):| event name: %eventName| your key: %myKey || value1: %value1 value2: %value2 value3: %value3"
     export function sendTextToIFTTT(eventName:string, myKey: string, value1?:string, value2?:string, value3?:string): void {
         Obloq_serial_init()
 	   basic.showLeds(`
