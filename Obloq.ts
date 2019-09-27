@@ -80,8 +80,106 @@ namespace Obloq {
 
     let OBLOQ_WEBHOOKS_URL = "maker.ifttt.com"
     let OBLOQ_WEBHOOKS_KEY = ""
-    let OBLOQ_WEBHOOKS_EVENT = ""    
-  
+    let OBLOQ_WEBHOOKS_EVENT = ""
+    
+    let cityID = ""
+    let weatherKey = ""    
+
+    let wInfo: string[][] = [
+        ["02_Weather", "main", "", "s"],
+        ["description", "description", "", "s"],
+        ["temperature", "\"temp\"", "", "k"],
+        ["humidity", "dity", "", "n"],
+        ["temp_min", "temp_min", "", "k"],
+        ["temp_max", "temp_max", "", "k"],
+        ["speed", "speed", "", "n"],
+        ["sunrise", "sunrise", "", "n"],
+        ["sunset", "sunset", "", "n"],
+        ["timezone", "timezone", "", "n"],
+        ["cityName", "name", "", "s"]
+    ]
+
+    export enum wType {
+        //% block="city name"
+        cityName = 10,
+        //% block="weather"
+        weather = 0,
+        //% block="description"
+        description = 1,
+        //% block="temperature"
+        temperature = 2,
+        //% block="humidity"
+        humidity = 3,
+        //% block="low temperature"
+        temp_min = 4,
+        //% block="maximum temperature"
+        temp_max = 5,
+        //% block="wind speed"
+        speed = 6,        
+        //% block="time of sunrise"
+        sunrise = 7,
+        //% block="time of sunset"
+        sunset = 8
+    }  
+
+   export enum cityIDs {
+        //% block="Singapore"
+        Singapore=1880252, 	    
+        //% block="Taipei"
+        Taipei = 1668341,
+        //% block="Hong Kong"
+        HongKong = 1819729,
+        //% block="Tokyo"
+        Tokyo = 1850147,
+        //% block="Seoul"
+        Seoul = 1835848,
+        //% block="Beijing"
+        Beijing=1816670,
+        //% block="Shanghai"
+        Shanghai=1796236,      
+        //% block="London"
+        London=2643743, 
+        //% block="Berlin"
+        Berlin=2950159, 
+        //% block="Paris"
+        Paris= 2988507,
+        //% block="New York"
+        NewYork=5128638, 
+        //% block="Sydney"
+        Sydney=2147714, 
+	   //% block="New Delhi"
+	   New_Delhi=1273294
+    }
+
+    export enum city2IDs {
+        //% block="Geylang"
+        Geylang = 1882749,
+        //% block="Jurong"
+        Jurong = 1882707,	   
+        //% block="Pasir Ris"
+        Pasir_Ris = 1880574,
+        //% block="Punggol"
+        Punggol = 1882753,
+        //% block="Seletar"
+        Seletar = 1880294,
+        //% block="Serangoon"
+        Serangoon = 1880242,	   
+        //% block="Sin Ming"
+        Sin_Ming = 1880755,
+        //% block="Singapore"
+        Singapore = 1880252,
+        //% block="Tampines"	   
+        Tampines = 1880216,
+        //% block="Tanglin"
+        Tanglin = 1882118,
+        //% block="Thomson"
+        Thomson = 1882558,
+        //% block="Woodlands"
+        Woodlands = 1882316,
+        //% block="Yishun"
+        Yishun = 1880701
+    }
+    
     export class PacketaMqtt {
         /**
          * Obloq receives the message content.
@@ -339,6 +437,31 @@ namespace Obloq {
     }
 
     
+    function getTimeStr(myTimes: number): string {
+        let myTimeStr = ""
+        let secs = myTimes % 60
+        let mins = Math.trunc(myTimes / 60)
+        let hours = Math.trunc(mins / 60)
+        mins = mins % 60
+        hours = hours % 24
+        if (hours < 10)
+            myTimeStr = "0" + hours
+        else
+            myTimeStr = "" + hours
+        myTimeStr += ":"
+        if (mins < 10)
+            myTimeStr = myTimeStr + "0" + mins
+        else
+            myTimeStr = myTimeStr + mins
+        myTimeStr += ":"
+        if (secs < 10)
+            myTimeStr = myTimeStr + "0" + secs
+        else
+            myTimeStr = myTimeStr + secs
+        return myTimeStr
+    }
+    
+    
     basic.forever(() => {
         if (OBLOQ_DEBUG) { led.plot(0, 0) }
         basic.pause(150)
@@ -526,51 +649,6 @@ namespace Obloq {
 
 
     /**
-     * Send the ping.time(ms): private long maxWait
-     * @param time to timeout, eg: 10000
-    */
-    //% weight=49 group="06_Other"
-    //% blockId=Obloq_send_ping
-    //% block="sendPing"
-    //% advanced=true
-    export function Obloq_send_ping(): boolean {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        let time = 5000
-        if (time < 100) {
-            time = 100
-        }
-        let timeout = time / 100
-        let _timeout = 0
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-        obloqWriteString("|1|1|\r")
-
-        while (OBLOQ_BOOL_TYPE_IS_TRUE) {
-            if (OBLOQ_ANSWER_CMD == "PingOk") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_TRUE
-            } else if (OBLOQ_ANSWER_CMD == "timeout") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_FALSE
-            }
-            basic.pause(100)
-            _timeout += 1
-            if (_timeout > timeout) {
-                if (OBLOQ_ANSWER_CMD != "PingOk") {
-                    OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                    return OBLOQ_BOOL_TYPE_IS_FALSE
-                }
-                else {
-                    return OBLOQ_BOOL_TYPE_IS_TRUE
-                }
-            }
-        }
-        return OBLOQ_BOOL_TYPE_IS_FALSE
-    }
-
-
-    /**
      * Get the software version.time(ms): private long maxWait
      * @param time to timeout, eg: 10000
     */
@@ -612,95 +690,6 @@ namespace Obloq {
             }
         }
         return OBLOQ_STR_TYPE_IS_NONE
-    }
-
-
-    /**
-     * Heartbeat request.time(ms): private long maxWait
-     * @param time to timeout, eg: 10000
-    */
-    //% weight=48 group="06_Other"
-    //% blockId=Obloq_get_heartbeat
-    //% block="get heartbeat"
-    //% advanced=true
-    export function Obloq_get_heartbeat(): boolean {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        let time = 5000
-        if (time < 100) {
-            time = 100
-        }
-        let timeout = time / 100
-        let _timeout = 0
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-        obloqWriteString("|1|3|" + time + "|\r")
-
-        while (OBLOQ_BOOL_TYPE_IS_TRUE) {
-            if (OBLOQ_ANSWER_CMD == "Heartbeat") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_TRUE
-            } else if (OBLOQ_ANSWER_CMD == "timeout") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_FALSE
-            }
-            basic.pause(100)
-            _timeout += 1
-            if (_timeout > timeout) {
-                if (OBLOQ_ANSWER_CMD != "Heartbeat") {
-                    OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                    return OBLOQ_BOOL_TYPE_IS_FALSE
-                }
-                else {
-                    return OBLOQ_BOOL_TYPE_IS_TRUE
-                }
-            }
-        }
-        return OBLOQ_BOOL_TYPE_IS_FALSE
-    }
-
-    
-    /**
-     * Stop the heartbeat request.
-    */
-    //% weight=47 group="06_Other"
-    //% blockId=Obloq_stop_heartbeat
-    //% block="stop heartbeat"
-    //% advanced=true
-    export function Obloq_stop_heartbeat(): boolean {
-        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        let time = 5000
-        if (time < 100) {
-            time = 100
-        }
-        let timeout = time / 100
-        let _timeout = 0
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
-        obloqWriteString("|1|3|-2|\r")
-
-        while (OBLOQ_BOOL_TYPE_IS_TRUE) {
-            if (OBLOQ_ANSWER_CMD == "Heartbeat") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_TRUE
-            } else if (OBLOQ_ANSWER_CMD == "timeout") {
-                OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                return OBLOQ_BOOL_TYPE_IS_FALSE
-            }
-            basic.pause(100)
-            _timeout += 1
-            if (_timeout > timeout) {
-                if (OBLOQ_ANSWER_CMD != "Heartbeat") {
-                    OBLOQ_ANSWER_CMD = OBLOQ_STR_TYPE_IS_NONE
-                    return OBLOQ_BOOL_TYPE_IS_FALSE
-                }
-                else {
-                    return OBLOQ_BOOL_TYPE_IS_TRUE
-                }
-            }
-        }
-        return OBLOQ_BOOL_TYPE_IS_FALSE
     }
 
 
@@ -962,6 +951,123 @@ namespace Obloq {
         return ret
     }
 
+    
+      /**
+     * Return the City ID in the World 
+    */ 
+    //% weight=95 group="06_Weather"
+    //% blockId=getCityID
+    //% block="get City ID of %myCity"
+    //% advanced=true    
+    export function getCityID(myCity: cityIDs): string {
+        return ("" + myCity)
+    }
+
+    /**
+     * Return the Town ID in Singapore 
+    */ 
+    //% weight=94 group="06_Weather"
+    //% blockId=getCity2ID
+    //% block="get Town ID of %myCity | in Singapore"
+    //% advanced=true
+    export function getCity2ID(myCity: city2IDs): string {
+        return ("" + myCity)
+    }
+
+    /**
+     * Return the weather information about the city from http://openweathermap.org/ 
+    */
+    //% weight=93 group="06_Weather"
+    //% blockId=getWeatherInfo
+    //% block="get weather data: %myInfo" blockGap=50
+    //% advanced=true
+    export function getWeatherInfo(myInfo: wType): string {
+        return wInfo[myInfo][2]
+    }
+
+    /**
+     * Connect to https://openweathermap.org/ to get the weather information
+     * You have to enter the City ID and your access key of the website
+     * @param myID to myID ,eg: "City Number"
+     * @param myKey to myKey ,eg: "access key"
+    */
+    //% weight=96 group="06_Weather"
+    //% blockId=setWeatherHttp
+    //% block="set city ID to get the weather information: %myID | OpenWeatherMap key: %myKey"
+    //% advanced=true
+    export function setWeatherHttp(myID: string, myKey: string): void {
+        Obloq_serial_init()
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)
+        cityID = myID
+        weatherKey = myKey
+        let item = ""
+        let returnCode = ""
+        let tempNumber = 0
+        let tempStr = ""
+        let myUrl = "http://api.openweathermap.org:80/data/2.5/weather?id=" + cityID + "&appid=" + weatherKey
+        serial.readString()
+        obloqWriteString("|3|1|" + myUrl + "|\r")
+        for (let i = 0; i < 3; i++) {
+            returnCode = serial.readUntil("|")
+        }
+        if (returnCode == "200") {
+            for (let i = 0; i < wInfo.length; i++) {
+                item = serial.readUntil(":")
+                while (item.indexOf(wInfo[i][1]) < 0) {
+                    item = serial.readUntil(":")
+                }
+                item = serial.readUntil(",")
+                switch (wInfo[i][3]) {
+                    case "s":
+                        wInfo[i][2] = item.substr(1, item.length - 2)
+                        break
+                    case "k":
+                        if (item.indexOf("}") != -1) {
+                            item = item.substr(0, item.length - 1)
+                        }
+                        wInfo[i][2] = "" + Math.round(parseFloat(item) - 273.15)
+                        break
+                    case "n":
+                        if (item.indexOf("}") != -1) {
+                            item = item.substr(0, item.length - 1)
+                        }
+                        wInfo[i][2] = item
+                        break
+                    default:
+                        wInfo[i][2] = item.substr(1, item.length - 2)
+                }
+            }
+            let riseTime = parseFloat(wInfo[7][2])
+            let setTime = parseFloat(wInfo[8][2])
+            let timeZone = parseFloat(wInfo[9][2])
+            riseTime += timeZone
+            setTime += timeZone
+            wInfo[7][2] = getTimeStr(riseTime)
+            wInfo[8][2] = getTimeStr(setTime)
+            basic.showIcon(IconNames.Yes)
+        }
+        else {
+            for (let i = 0; i < wInfo.length; i++) {
+                wInfo[i][2] = ""
+            }
+            basic.showIcon(IconNames.No)
+        }
+    }  
+    
     
     function Obloq_connect_mqtt(): void {
         if (!OBLOQ_SERIAL_INIT) {
