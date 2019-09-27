@@ -525,7 +525,7 @@ namespace Obloq {
         * @param EVENT to EVENT ,eg: "yourEvent"
         * @param KEY to KEY ,eg: "yourKey"
        */
-    //% weight=99 group="03_IFTTT" 
+    //% weight=98 group="03_IFTTT" 
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% blockId=Obloq_IFTTT_webhooks
@@ -566,7 +566,7 @@ namespace Obloq {
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
     */
-    //% weight=98 group="03_IFTTT"
+    //% weight=97 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
     //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): string {
