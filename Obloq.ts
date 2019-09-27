@@ -909,12 +909,15 @@ namespace Obloq {
             else
                 break
         }
+        serial.readString()
         obloqWriteString("|3|1|" + myUrl + "|\r")
-        let ret = Obloq_http_wait_request(15000)
-        if (ret == "")
-            basic.showIcon(IconNames.No)
+        for (let i = 0; i < 3; i++) {
+            returnCode = serial.readUntil("|")
+        }
+        if (returnCode == "200")
+            basic.showIcon(IconNames.Yes)
         else
-            basic.showIcon(IconNames.Yes)   
+            basic.showIcon(IconNames.No)
     } 
 
     
