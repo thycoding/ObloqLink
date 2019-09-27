@@ -447,6 +447,21 @@ namespace Obloq {
     //% blockId=Obloq_IFTTT_post
     //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): string {
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)	  	    
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -454,6 +469,7 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
+ 
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
         let ret = Obloq_http_wait_request(time)
         if (ret == "") {
@@ -558,10 +574,10 @@ namespace Obloq {
      * Get the software version.time(ms): private long maxWait
      * @param time to timeout, eg: 10000
     */
-    //% weight=50 group="06_Other"
+    //% weight=97 group="01_System" 
     //% blockId=Obloq_get_version
     //% block="get version"
-    //% advanced=true
+    //% advanced=false
     export function Obloq_get_version(): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         let time = 5000
@@ -778,10 +794,10 @@ namespace Obloq {
     /**
      * Get IP address.
     */
-    //% weight=98 group="06_Other"
+    //% weight=98 group="01_System" 
     //% blockId=Obloq_Obloq_ifconfig
     //% block="ipconfig"
-    //% advanced=true
+    //% advanced=false
     export function Obloq_wifi_ipconfig(): string {
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         return OBLOQ_WIFI_IP
@@ -866,7 +882,7 @@ namespace Obloq {
     //% expandableArgumentMode"toggle" inlineInputMode=inline
     //% block="ThingSpeak(post)| write key: %myKey field1: %field1 || field2: %field2 field3: %field3 field4: %field4 field5: %field5 field6: %field6 field7: %field7 field8: %field8"
     //% advanced=true    
-    export function saveToThingSpeak(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): void {
+    export function Obloq_ThingSpeak_post(myKey: string, field1:number, field2?:number, field3?:number, field4?:number, field5?:number, field6?:number, field7?:number, field8?:number): void {
         Obloq_serial_init()
 	   basic.showLeds(`
         . . . . .
@@ -911,6 +927,21 @@ namespace Obloq {
     //% block="HTTP Request | url %url| timeout(ms) %time"
     //% advanced=true
     export function Obloq_http_request(url: string, time: number): string {
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)	 	    
         while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
         if (!OBLOQ_HTTP_INIT)
             return OBLOQ_STR_TYPE_IS_NONE
@@ -918,6 +949,7 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
+	   
         obloqWriteString("|3|1|http://" + url + "|\r")
         let ret = Obloq_http_wait_request(time)
         if (ret == "")
