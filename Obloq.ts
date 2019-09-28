@@ -546,12 +546,15 @@ namespace Obloq {
      * The IFTTP post request.url(string): URL; content(string):content
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
+	* @param value1 to value1 ,eg: "-"
+	* @param value2 to value2 ,eg: "-"
+	* @param value3 to value3 ,eg: "-"
     */
     //% weight=97 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
     //% expandableArgumentMode"toggle" inlineInputMode=inline 
     //% block="IFTTT (post) | event name: %eventName| your key: %myKey| timeout(ms) %time || value1: %value1 value2: %value2 value3: %value3"
-    export function Obloq_IFTTT_post(eventName:string, myKey: string, time: number, value1:string, value2:string, value3:string): void {	    
+    export function Obloq_IFTTT_post(eventName:string, myKey: string, time: number, value1?:string, value2?:string, value3?:string): void {	    
         Obloq_serial_init()	    
 	   basic.showLeds(`
         . . . . .
