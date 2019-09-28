@@ -569,8 +569,8 @@ namespace Obloq {
     //% weight=97 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
     //% expandableArgumentMode"toggle" inlineInputMode=inline 
-    //% block="IFTTT (post) | event name: %eventName| your key: %myKey || value1: %value1 value2: %value2 value3: %value3 timeout(ms) %time"
-    export function Obloq_IFTTT_post(eventName:string, myKey: string, value1?:string, value2?:string, value3?:string, time: number): void {	    
+    //% block="IFTTT (post) | event name: %eventName| your key: %myKey| timeout(ms) %time || value1: %value1 value2: %value2 value3: %value3"
+    export function Obloq_IFTTT_post(eventName:string, myKey: string, time: number, value1?:string, value2?:string, value3?:string): void {	    
         Obloq_serial_init()	    
 	   basic.showLeds(`
         . . . . .
