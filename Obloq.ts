@@ -546,9 +546,6 @@ namespace Obloq {
      * The IFTTP post request.url(string): URL; content(string):content
      * time(ms): private long maxWait
      * @param time set timeout, eg: 10000
-	* @param value1 to value1 ,eg: "-"
-	* @param value2 to value2 ,eg: "-"
-	* @param value3 to value3 ,eg: "-"
     */
     //% weight=97 group="03_IFTTT"
     //% blockId=Obloq_IFTTT_post
@@ -570,7 +567,17 @@ namespace Obloq {
         # # # # #
         . . # . .
         . . . . .
-        `)	        
+        `)
+	   if (value1 == "") {
+		 value1 = ""		   
+	   }
+	   if (value2 == "") {
+		 value2 = ""		   
+	   }
+	   if (value3 == "") {
+		 value3 = ""		   
+	   }	   
+
         obloqWriteString("|3|2|http://maker.ifttt.com/trigger/" + eventName + "/with/key/" + myKey + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
         let ret = Obloq_http_wait_request(time)
 	   if (ret.substr(0, "Congratulations".length) == "Congratulations") {
