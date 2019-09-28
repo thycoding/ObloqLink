@@ -568,13 +568,13 @@ namespace Obloq {
         . . # . .
         . . . . .
         `)
-	   if (value1 == "") {
+	   if (value1 == null) {
 		 value1 = ""		   
 	   }
-	   if (value2 == "") {
+	   if (value2 == null) {
 		 value2 = ""		   
 	   }
-	   if (value3 == "") {
+	   if (value3 == null) {
 		 value3 = ""		   
 	   }	   
 
