@@ -78,10 +78,6 @@ namespace Obloq {
     let OBLOQ_WORKING_MODE_IS_HTTP = OBLOQ_BOOL_TYPE_IS_FALSE
     let OBLOQ_WORKING_MODE_IS_STOP = OBLOQ_BOOL_TYPE_IS_TRUE
 
-    let OBLOQ_WEBHOOKS_URL = "maker.ifttt.com"
-    let OBLOQ_WEBHOOKS_KEY = ""
-    let OBLOQ_WEBHOOKS_EVENT = ""
-    
     let cityID = ""
     let weatherKey = ""    
 
@@ -522,21 +518,6 @@ namespace Obloq {
     
     
     /**
-        * @param EVENT to EVENT ,eg: "yourEvent"
-        * @param KEY to KEY ,eg: "yourKey"
-       */
-    //% weight=98 group="03_IFTTT" 
-    //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
-    //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
-    //% blockId=Obloq_IFTTT_webhooks
-    //% block="IFTTT Webhooks:|event: %EVENT|key: %KEY|"
-    export function Obloq_http_IFTTT(EVENT: string, KEY: string): void {
-        OBLOQ_WEBHOOKS_EVENT = EVENT
-        OBLOQ_WEBHOOKS_KEY = KEY
-    }
-
-    
-    /**
      * @param BROKER to BROKER ,eg: "iot.dfrobot.com"
      * @param BPORT to BPORT ,eg: 1883		
      * @param IOT_ID to IOT_ID ,eg: "yourIotId"
@@ -570,7 +551,7 @@ namespace Obloq {
     //% blockId=Obloq_IFTTT_post
     //% expandableArgumentMode"toggle" inlineInputMode=inline 
     //% block="IFTTT (post) | event name: %eventName| your key: %myKey| timeout(ms) %time || value1: %value1 value2: %value2 value3: %value3"
-    export function Obloq_IFTTT_post(eventName:string, myKey: string, time: number, value1?:string, value2?:string, value3?:string): void {	    
+    export function Obloq_IFTTT_post(eventName:string, myKey: string, time: number, value1:string, value2:string, value3:string): void {	    
         Obloq_serial_init()	    
 	   basic.showLeds(`
         . . . . .
@@ -597,52 +578,6 @@ namespace Obloq {
 	   }
     } 
 
-    
-    /**
-     * Connect to IFTTT to trig event
-    */
-    //% weight=99 group="03_IFTTT"
-    //% blockId=sendTextToIFTTT blockGap=5
-    //% expandableArgumentMode"toggle" inlineInputMode=inline
-    //% block="IFTTT post (no space text):| event name: %eventName| your key: %myKey || value1: %value1 value2: %value2 value3: %value3"
-    export function sendTextToIFTTT(eventName:string, myKey: string, value1?:string, value2?:string, value3?:string): void {
-        Obloq_serial_init()
-	   basic.showLeds(`
-        . . . . .
-        . . . . .
-        . # # # .
-        . . . . .
-        . . . . .
-        `)
-	  basic.pause(500)
-	  basic.showLeds(`
-        . . . . .
-        . . # . .
-        # # # # #
-        . . # . .
-        . . . . .
-        `)
-        let returnCode=""
-        let myArr:string[]=[value1,value2,value3]
-        let myUrl = "http://maker.ifttt.com/trigger/"+eventName+"/with/key/" + myKey+"?"
-        for(let i=0;i<myArr.length;i++)
-        {
-            if (myArr[i]!=null)
-                myUrl+="&value"+(i+1)+"="+myArr[i]
-            else
-                break
-        }
-        serial.readString()
-        obloqWriteString("|3|1|" + myUrl + "|\r")
-        for (let i = 0; i < 3; i++) {
-            returnCode = serial.readUntil("|")
-        }
-        if (returnCode == "200")
-            basic.showIcon(IconNames.Yes)
-        else
-            basic.showIcon(IconNames.No)
-    }    
-    
     
     /**
      * Disconnect the serial port.
