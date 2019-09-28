@@ -587,7 +587,7 @@ namespace Obloq {
         . . # . .
         . . . . .
         `)	        
-        obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
+        obloqWriteString("|3|2|http://maker.ifttt.com/trigger/" + eventName + "/with/key/" + myKey + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
         let ret = Obloq_http_wait_request(time)
 	   if (ret.substr(0, "Congratulations".length) == "Congratulations") {
 		  basic.showIcon(IconNames.Yes) 
