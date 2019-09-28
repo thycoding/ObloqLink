@@ -571,6 +571,7 @@ namespace Obloq {
     //% expandableArgumentMode"toggle" inlineInputMode=inline    
     //% block="IFTTT(post) | value1 %value1| value2 %value2| value3 %value3| timeout(ms) %time"
     export function Obloq_IFTTT_post(value1: string, value2: string, value3: string, time: number): void {
+        Obloq_serial_init()	    
 	   basic.showLeds(`
         . . . . .
         . . . . .
@@ -587,12 +588,6 @@ namespace Obloq {
         . . . . .
         `)	        
 	   while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
-        if (!OBLOQ_HTTP_INIT)
-            return OBLOQ_STR_TYPE_IS_NONE
-
-        if (!OBLOQ_SERIAL_INIT) {
-            Obloq_serial_init()
-        }
         obloqWriteString("|3|2|http://" + OBLOQ_WEBHOOKS_URL + "/trigger/" + OBLOQ_WEBHOOKS_EVENT + "/with/key/" + OBLOQ_WEBHOOKS_KEY + ",{\"value1\":\"" + value1 + "\",\"value2\":\"" + value2 + "\",\"value3\":\"" + value3 + "\" }" + "|\r")
         let ret = Obloq_http_wait_request(time)
 	   if (ret.substr(0, "Congratulations".length) == "Congratulations") {
