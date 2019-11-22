@@ -520,33 +520,6 @@ namespace Obloq {
     
      /**
      * @param BROKER to BROKER ,eg: "iot.dfrobot.com"
-     * @param CLIENTID to CLIENTID ,eg: "node1"	
-     * @param BPORT to BPORT ,eg: 1883		
-     * @param IOT_ID to IOT_ID ,eg: "yourIotId"
-     * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
-     * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
-    */
-    //% weight=181 group="02_MQTT"
-    //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
-    //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
-    //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
-    //% blockId=Obloq_mqtt_setup01
-    //% block="MQTT Setup01|IoT Service:|broker: %BROKER|port: %BPORT|clientid: %CLIENTIDID|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
-    export function Obloq_mqtt_setup01(/*mqtt broker*/ BROKER: string, BPORT: number, CLIENTID: string, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
-        void {
-	   OBLOQ_MQTT_SERVER = BROKER
-	   OBLOQ_MQTT_PORT = BPORT
-	   OBLOQ_MQTT_CLIENTID = CLIENTID	   
-        OBLOQ_MQTT_PWD = IOT_PWD
-        OBLOQ_MQTT_ID = IOT_ID
-        OBLOQ_MQTT_TOPIC[0][0] = IOT_TOPIC
-        Obloq_serial_init()
-        Obloq_start_connect_mqtt("connect wifi")
-    }
-    
-    
-    /**
-     * @param BROKER to BROKER ,eg: "iot.dfrobot.com"
      * @param BPORT to BPORT ,eg: 1883		
      * @param IOT_ID to IOT_ID ,eg: "yourIotId"
      * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
@@ -557,19 +530,20 @@ namespace Obloq {
     //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
     //% blockId=Obloq_mqtt_setup
-    //% block="MQTT Setup|IoT Service:|broker: %BROKER|port: %BPORT|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
-    export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
+    //% block="MQTT Setup|IoT Service:|broker: %BROKER|port: %BPORT|client_id: %CLIENTIDID|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
+    export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, CLIENTID: string, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
         void {
 	   OBLOQ_MQTT_SERVER = BROKER
 	   OBLOQ_MQTT_PORT = BPORT
+	   OBLOQ_MQTT_CLIENTID = CLIENTID
         OBLOQ_MQTT_PWD = IOT_PWD
         OBLOQ_MQTT_ID = IOT_ID
         OBLOQ_MQTT_TOPIC[0][0] = IOT_TOPIC
         Obloq_serial_init()
         Obloq_start_connect_mqtt("connect wifi")
     }
-
     
+ 
     /**
      * The IFTTP post request.url(string): URL; content(string):content
      * time(ms): private long maxWait
