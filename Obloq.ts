@@ -50,6 +50,7 @@ namespace Obloq {
     //mqtt
     let OBLOQ_MQTT_PORT = 0
     let OBLOQ_MQTT_SERVER = OBLOQ_STR_TYPE_IS_NONE
+    let OBLOQ_MQTT_CLIENTID = OBLOQ_STR_TYPE_IS_NONE    
     let OBLOQ_MQTT_PWD = OBLOQ_STR_TYPE_IS_NONE
     let OBLOQ_MQTT_ID = OBLOQ_STR_TYPE_IS_NONE
     let OBLOQ_MQTT_TOPIC = [["x", "false"], ["x", "false"], ["x", "false"], ["x", "false"], ["x", "false"]]
@@ -514,6 +515,33 @@ namespace Obloq {
         OBLOQ_SERIAL_RX = receive
         Obloq_serial_init()
         Obloq_start_connect_http()
+    }
+    
+    
+     /**
+     * @param BROKER to BROKER ,eg: "iot.dfrobot.com"
+     * @param CLIENTID to CLIENTID ,eg: "node1"	
+     * @param BPORT to BPORT ,eg: 1883		
+     * @param IOT_ID to IOT_ID ,eg: "yourIotId"
+     * @param IOT_PWD to IOT_PWD ,eg: "yourIotPwd"
+     * @param IOT_TOPIC to IOT_TOPIC ,eg: "yourIotTopic"
+    */
+    //% weight=181 group="02_MQTT"
+    //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
+    //% send.fieldEditor="gridpicker" send.fieldOptions.columns=3
+    //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
+    //% blockId=Obloq_mqtt_setup01
+    //% block="MQTT Setup01|IoT Service:|broker: %BROKER|port: %BPORT|clientid: %CLIENTIDID|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
+    export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, CLIENTID: string, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
+        void {
+	   OBLOQ_MQTT_SERVER = BROKER
+	   OBLOQ_MQTT_PORT = BPORT
+	   OBLOQ_MQTT_CLIENTID = CLIENTID	   
+        OBLOQ_MQTT_PWD = IOT_PWD
+        OBLOQ_MQTT_ID = IOT_ID
+        OBLOQ_MQTT_TOPIC[0][0] = IOT_TOPIC
+        Obloq_serial_init()
+        Obloq_start_connect_mqtt("connect wifi")
     }
     
     
@@ -1055,7 +1083,11 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
-        obloqWriteString("|4|1|1|" + OBLOQ_MQTT_SERVER + "|" + OBLOQ_MQTT_PORT + "|" + OBLOQ_MQTT_ID + "|" + OBLOQ_MQTT_PWD + "|\r")
+        if (!OBLOQ_MQTT_CLIENTID) {
+				obloqWriteString("|4|1|1|" + OBLOQ_MQTT_SERVER + "|" + OBLOQ_MQTT_PORT + "|" + OBLOQ_MQTT_ID + "|" + OBLOQ_MQTT_PWD + "|\r")
+         } else {
+				obloqWriteString("|4|1|1|" + OBLOQ_MQTT_SERVER + "|" + OBLOQ_MQTT_PORT + "|" + OBLOQ_MQTT_CLIENTID + "|" + OBLOQ_MQTT_ID + "|" + OBLOQ_MQTT_PWD + "|\r")
+         }	   
     }
 
 
