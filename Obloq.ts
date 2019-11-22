@@ -532,7 +532,7 @@ namespace Obloq {
     //% SERVER.fieldEditor="gridpicker" SERVER.fieldOptions.columns=2
     //% blockId=Obloq_mqtt_setup01
     //% block="MQTT Setup01|IoT Service:|broker: %BROKER|port: %BPORT|clientid: %CLIENTIDID|name: %IOT_ID|password: %IOT_PWD|(default topic_0) Topic: %IOT_TOPIC|start connection"
-    export function Obloq_mqtt_setup(/*mqtt broker*/ BROKER: string, BPORT: number, CLIENTID: string, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
+    export function Obloq_mqtt_setup01(/*mqtt broker*/ BROKER: string, BPORT: number, CLIENTID: string, IOT_ID: string, IOT_PWD: string, IOT_TOPIC: string):
         void {
 	   OBLOQ_MQTT_SERVER = BROKER
 	   OBLOQ_MQTT_PORT = BPORT
