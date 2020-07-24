@@ -1245,8 +1245,8 @@ namespace Obloq {
     }
 
 
-    function Obloq_serial_recevice(): void {
-
+   function Obloq_serial_recevice(): void {
+        //basic.showString("B")
         let Obloq_message_str = serial.readString()
         let size = Obloq_message_str.length
         let item = Obloq_message_str
@@ -1328,6 +1328,7 @@ namespace Obloq {
             }
             return
         } else if (item.indexOf("|2|1|", 0) != -1) {
+            
             OBLOQ_ANSWER_CMD = "WifiDisconnect"
             OBLOQ_ANSWER_CONTENT = OBLOQ_STR_TYPE_IS_NONE
             if (OBLOQ_MQTT_INIT || OBLOQ_HTTP_INIT || OBLOQ_WIFI_CONNECTED) {
@@ -1337,6 +1338,7 @@ namespace Obloq {
         } else if (item.indexOf("|2|2|", 0) != -1) {
             OBLOQ_ANSWER_CMD = "WifiConnecting"
             OBLOQ_ANSWER_CONTENT = OBLOQ_STR_TYPE_IS_NONE
+            //serial.writeNumber(12)
             return
         } else if (item.indexOf("|2|3|", 0) != -1) {
             OBLOQ_ANSWER_CMD = "WifiConnected"
@@ -1358,12 +1360,16 @@ namespace Obloq {
     }
 
     
-    function onEvent() {
+ function onEvent() {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
+        //basic.showString("A")
         OBLOQ_MQTT_EVENT = OBLOQ_BOOL_TYPE_IS_TRUE
         obloqEventOn()
-        control.onEvent(<number>32, <number>1, Obloq_serial_recevice); // register handler
+        //control.onEvent(<number>32, <number>1, Obloq_serial_recevice,16); // register handler
+        serial.onDataReceived('\r', Obloq_serial_recevice )
+        //control.onEvent(32, 1, Obloq_serial_recevice)
     }
+
 }

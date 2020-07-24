@@ -20,7 +20,7 @@ namespace Obloq {
 
     //%
     void obloqEventOn(){
-        uBit.serial.eventOn(ManagedString('\r'), MicroBitSerialMode::ASYNC);
+        uBit.serial.eventOn(ManagedString("\r"), MicroBitSerialMode::ASYNC);
     }
 
     //%
