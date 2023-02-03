@@ -1088,9 +1088,11 @@ namespace Obloq {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
         }
-	   
-        //obloqWriteString("|3|1|" + url + "|\r")
-	    obloqWriteString("|3|1|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")	
+		
+        let myUrl = "http://api.callmebot.com/telegram/group.php?apikey="+apiKey+"&text="+message
+
+        obloqWriteString("|3|1|" + myUrl + "|\r")
+		
         let ret = Obloq_http_wait_request(10000)
         if (ret == "")
             basic.showIcon(IconNames.No)
