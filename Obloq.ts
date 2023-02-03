@@ -1066,8 +1066,7 @@ namespace Obloq {
     //% block="send message to Telegram:|API Key %apiKey|Message %message"
 	//% advanced=true
     export function sendTelegramMessage(apiKey: string, message: string) {
-       Obloq_serial_init()	    
-	   basic.showLeds(`
+         basic.showLeds(`
         . . . . .
         . . . . .
         . # # # .
@@ -1081,9 +1080,17 @@ namespace Obloq {
         # # # # #
         . . # . .
         . . . . .
-        `)
-		
-        obloqWriteString("|3|1|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")
+        `)	 	    
+        while (OBLOQ_WORKING_MODE_IS_STOP) { basic.pause(20) }
+        if (!OBLOQ_HTTP_INIT)
+            return OBLOQ_STR_TYPE_IS_NONE
+
+        if (!OBLOQ_SERIAL_INIT) {
+            Obloq_serial_init()
+        }
+	   
+        //obloqWriteString("|3|1|" + url + "|\r")
+	    obloqWriteString("|3|1|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")	
         let ret = Obloq_http_wait_request(10000)
         if (ret == "")
             basic.showIcon(IconNames.No)
