@@ -1083,7 +1083,7 @@ namespace Obloq {
         . . . . .
         `)
 		
-        obloqWriteString("|3|2|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")
+        obloqWriteString("|3|1|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")
         let ret = Obloq_http_wait_request(10000)
         if (ret == "")
             basic.showIcon(IconNames.No)
