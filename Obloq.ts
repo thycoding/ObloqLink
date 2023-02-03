@@ -926,7 +926,7 @@ namespace Obloq {
             Obloq_serial_init()
         }
 	   
-        obloqWriteString("|3|1|https://" + url + "|\r")
+        obloqWriteString("|3|1|" + url + "|\r")
         let ret = Obloq_http_wait_request(time)
         if (ret == "")
             basic.showIcon(IconNames.No)
