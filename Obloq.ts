@@ -935,6 +935,30 @@ namespace Obloq {
         return ret
     }
 
+
+    /**
+     * Return the weather information about the city from http://openweathermap.org/ 
+    */
+    //% weight=93 group="06_Weather"
+    //% blockId=getWeatherInfo
+    //% block="get weather data: %myInfo" blockGap=50
+    //% advanced=true
+    export function getWeatherInfo(myInfo: wType): string {
+        return wInfo[myInfo][2]
+    }
+	
+
+    /**
+     * Return the Town ID in Singapore 
+    */ 
+    //% weight=94 group="06_Weather"
+    //% blockId=getCity2ID
+    //% block="get Town ID of %myCity | in Singapore"
+    //% advanced=true
+    export function getCity2ID(myCity: city2IDs): string {
+        return ("" + myCity)
+    }
+	
     
       /**
      * Return the City ID in the World 
@@ -947,27 +971,6 @@ namespace Obloq {
         return ("" + myCity)
     }
 
-    /**
-     * Return the Town ID in Singapore 
-    */ 
-    //% weight=94 group="06_Weather"
-    //% blockId=getCity2ID
-    //% block="get Town ID of %myCity | in Singapore"
-    //% advanced=true
-    export function getCity2ID(myCity: city2IDs): string {
-        return ("" + myCity)
-    }
-
-    /**
-     * Return the weather information about the city from http://openweathermap.org/ 
-    */
-    //% weight=93 group="06_Weather"
-    //% blockId=getWeatherInfo
-    //% block="get weather data: %myInfo" blockGap=50
-    //% advanced=true
-    export function getWeatherInfo(myInfo: wType): string {
-        return wInfo[myInfo][2]
-    }
 
     /**
      * Connect to https://openweathermap.org/ to get the weather information
@@ -1053,6 +1056,44 @@ namespace Obloq {
     }  
     
     
+	    /**
+     * Send Telegram message.
+     * @param apiKey Telegram API Key.
+     * @param chatId The chat ID we want to send message to.
+     */
+    //% weight=80 group="07_Telegram"
+    //% blockId=Obloq_send_telegram_message
+    //% block="send message to Telegram:|API Key %apiKey|Chat ID %chatId|Message %message"
+	//% advanced=true
+    export function sendTelegramMessage(apiKey: string, chatId: string, message: string) {
+       Obloq_serial_init()	    
+	   basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . . . . .
+        . . . . .
+        `)
+	  basic.pause(500)
+	  basic.showLeds(`
+        . . . . .
+        . . # . .
+        # # # # #
+        . . # . .
+        . . . . .
+        `)
+		
+        obloqWriteString("|3|2|https://api.telegram.org/bot/" + apiKey + "/sendMessage?chat_id=" + chatId + "&text=" +  message + "|\r")
+        let ret = Obloq_http_wait_request(10000)
+	   if (ret.substr(0, "ok".length) == "ok") {
+		  basic.showIcon(IconNames.Yes) 
+	   }
+	   else {
+		  basic.showIcon(IconNames.No)
+	   }
+    } 
+
+	
     function Obloq_connect_mqtt(): void {
         if (!OBLOQ_SERIAL_INIT) {
             Obloq_serial_init()
