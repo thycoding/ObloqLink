@@ -1063,9 +1063,9 @@ namespace Obloq {
      */
     //% weight=80 group="07_Telegram"
     //% blockId=Obloq_send_telegram_message
-    //% block="send message to Telegram:|API Key %apiKey|Chat ID %chatId|Message %message"
+    //% block="send message to Telegram:|API Key %apiKey|Message %message"
 	//% advanced=true
-    export function sendTelegramMessage(apiKey: string, chatId: string, message: string) {
+    export function sendTelegramMessage(apiKey: string, message: string) {
        Obloq_serial_init()	    
 	   basic.showLeds(`
         . . . . .
@@ -1083,15 +1083,14 @@ namespace Obloq {
         . . . . .
         `)
 		
-        obloqWriteString("|3|1|https://api.telegram.org/bot/" + apiKey + "/sendMessage?chat_id=" + chatId + "&text=" +  message + "|\r")
+        obloqWriteString("|3|2|http://api.callmebot.com/telegram/group.php?apikey=" + apiKey + "&text=" +  message + "|\r")
         let ret = Obloq_http_wait_request(10000)
-	   if (ret.substr(0, "ok".length) == "ok") {
-		  basic.showIcon(IconNames.Yes) 
-	   }
-	   else {
-		  basic.showIcon(IconNames.No)
-	   }
-    } 
+        if (ret == "")
+            basic.showIcon(IconNames.No)
+        else
+            basic.showIcon(IconNames.Yes)   	   
+        return ret
+    }
 
 	
     function Obloq_connect_mqtt(): void {
