@@ -1057,15 +1057,15 @@ namespace Obloq {
     
     
 	    /**
-     * Send Telegram message.
-     * @param apiKey Telegram API Key.
-     * @param chatId The chat ID we want to send message to.
+     * Send Telegram Message Using CallMeBot.
+     * @param apiKey CallMeBot API Key.
+     * @param message The Message we want to send.
      */
     //% weight=80 group="07_Telegram"
-    //% blockId=Obloq_send_telegram_message
-    //% block="send message to Telegram:|API Key %apiKey|Message %message"
+    //% blockId=Obloq_send_callmebot_message
+    //% block="send telegram message via CallMeBot:|API Key %apiKey|Message %message"
 	//% advanced=true
-    export function sendTelegramMessage(apiKey: string, message: string) {
+    export function sendCallMeBotMessage(apiKey: string, message: string) {
          basic.showLeds(`
         . . . . .
         . . . . .
